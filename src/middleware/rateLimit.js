@@ -8,7 +8,7 @@ const redirectLimiter = rateLimit({
 
 const createLinkLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10, // limit each IP to 10 link creations per windowMs
+  max: 100, // limit each IP to 10 link creations per windowMs
   message: 'Too many links created from this IP, please try again later'
 });
 
