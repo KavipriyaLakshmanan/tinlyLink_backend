@@ -62,7 +62,16 @@ const createLink = async (req, res) => {
     res.status(201).json(response);
   } catch (error) {
     console.error('Error creating link:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    
+    // More specific error messages
+    if (error.code === '23505') { // PostgreSQL unique violation
+      return res.status(409).json({ error: 'Short code already exists' });
+    }
+    
+    res.status(500).json({ 
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
